@@ -19,6 +19,7 @@ function checkRss(func, item){
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
           var data = {rss_datetime: row.rss_datetime};
           connection.query(updateSql, data, function(err){
+            console.log(123);
             if(err){
               throw err;
             }
@@ -54,7 +55,6 @@ function genText(func, item){
       // item.summary.split("<br/>").join("\n");
       item.summary;
   }
-  console.log(text);
   return text;
 }
 
