@@ -16,8 +16,8 @@ function sendMessage(chatId, text) {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(postData)
       }
-      console.log(postOptions);
   };
+  console.log(postOptions);
   // Set up the request
   var postReq = http.request(postOptions, function(res) {
       res.setEncoding('utf8');
