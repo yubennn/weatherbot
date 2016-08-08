@@ -6,7 +6,6 @@ selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscrib
 function checkRss(func, item){
   console.log('func: ', func, 'title: ', item.title);
   var selectSql = 'select * from rss_log where ?';
-  console.log(selectSql);
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
       //檢查是否有錯誤

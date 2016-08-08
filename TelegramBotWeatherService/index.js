@@ -11,7 +11,7 @@ var app = express();
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 // server = https.createServer(credentials, app).listen(8443);
-httpsServer.listen(8443,function(){
+httpsServer.listen(process.env.PORT || 5000,function(){
   hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
   timeout();
 });
