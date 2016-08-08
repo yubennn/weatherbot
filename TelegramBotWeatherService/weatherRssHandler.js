@@ -4,6 +4,7 @@ var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
 
 function checkRss(func, item){
+  console.log(fun,item.title);
   var selectSql = 'select * from rss_log where ?';
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
@@ -14,6 +15,8 @@ function checkRss(func, item){
       if(rows.length > 0){
         var row = rows[0];
         //有更新
+          console.log(row.rss_datetime);
+          console.log(item.date);
         if(row.rss_datetime != item.date.toString()){
           console.log(row.rss_datetime);
           console.log(item.date);
