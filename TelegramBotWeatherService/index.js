@@ -2,7 +2,7 @@
 var http = require('http');
 var https = require('https');
 var express = require('express');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 var fs = require('fs');
 var privateKey = fs.readFileSync(__dirname+'/../PRIVATE.key');
 var certificate = fs.readFileSync(__dirname+'/../PUBLIC.pem');
@@ -14,7 +14,7 @@ httpsServer.listen(process.env.PORT || 8443,function(){
   hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
   timeout();
 });
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 //requesthandlers
 var requestHandlers = require("./requestHandlers");
 var handle = {}
