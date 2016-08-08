@@ -3,7 +3,7 @@ var fs = require("fs");
 var formidable = require("formidable");
 var connection = require("./dbConnection");
 var HongKongWeather = require('hongkong-weather');
-var hkweather = require("./hkＷeather");
+var hkweather = require("./hkWeather");
 var weatherRssHandler = require("./weatherRssHandler");
 var telegramBotUtil = require("./telegramBotUtil");
 
