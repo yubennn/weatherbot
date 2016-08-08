@@ -27,7 +27,7 @@ handle["/unsubscribewarning"] = requestHandlers.unsubscribewarning;
 handle["/tellmecurrent"] = requestHandlers.tellmecurrent;
 handle["/tellmewarning"] = requestHandlers.tellmewarning;
 //hkweather rss
-var hkweather = require("./hkweather");
+var hkweather = require("./hkＷeather");
 var weatherRssHandler = require("./weatherRssHandler");
 function timeout(){
   setTimeout(function () {
