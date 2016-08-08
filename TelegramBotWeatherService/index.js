@@ -50,9 +50,12 @@ app.post('/', function(req, res){
       handle[method](res, req);
     } else {
       console.log("No request handler found for " + method);
-      response.writeHead(404, {"Content-Type": "text/html"});
-      response.write("404 Not found");
-      response.end();
+      res.writeHead(404, {"Content-Type": "text/html"});
+      res.write("404 Not found");
+      res.end();
     }
   }
+});
+app.get('/', function(req, res){
+  res.send('123123123');
 });
