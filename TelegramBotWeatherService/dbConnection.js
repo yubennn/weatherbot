@@ -2,10 +2,10 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
-    host: '127.0.0.1',
-    user: 'wheatherbot',
-    password: 'yoyo123',
-    database: 'wheatherbot',
+    host: 'us-cdbr-iron-east-04.cleardb.net',
+    user: 'b44e9dbc2ad0fb',
+    password: '956374b8',
+    database: 'heroku_2d8d79a4be116d0',
     port: 3306
 });
 
