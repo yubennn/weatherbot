@@ -4,6 +4,7 @@ var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
 
 function checkRss(func, item){
+  console.log('func: ', func, 'title: ', item.title);
   var selectSql = 'select * from rss_log where ?';
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
@@ -15,7 +16,6 @@ function checkRss(func, item){
         var row = rows[0];
         //有更新
         if(row.rss_datetime != item.date.toString()){
-          console.log('func: ', func, 'title: ', item.title);
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
           var data = {rss_datetime: item.date};
           connection.query(updateSql, data, function(err){
@@ -26,7 +26,6 @@ function checkRss(func, item){
           sendUpdate(func, genText(func, item));
         }
       }else{
-        console.log('func: ', func, 'title: ', item.title);
         var insertSql = 'insert into rss_log set ?';
         var data = {rss_func: func, rss_datetime: item.date};
         connection.query(insertSql, data, function(err){
@@ -54,6 +53,7 @@ function genText(func, item){
       // item.summary.split("<br/>").join("\n");
       item.summary;
   }
+  console.log(text);
   return text;
 }
 
