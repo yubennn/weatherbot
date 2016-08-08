@@ -38,6 +38,7 @@ function timeout(){
 }
 //get router
 app.post('/', function(req, res){
+  console.log(123);
   'use strict';
   //check method field exist
   if(!req.body.message || !req.body.message.text){
