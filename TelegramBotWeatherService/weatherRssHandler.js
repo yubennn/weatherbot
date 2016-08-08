@@ -15,7 +15,8 @@ function checkRss(func, item){
         var row = rows[0];
         //有更新
         if(row.rss_datetime != item.date.toString()){
-          console.log('func: ', func, 'title: ', item.title);
+          console.log(row.rss_datetime);
+          console.log(item.date);
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
           var data = {rss_datetime: item.date};
           connection.query(updateSql, data, function(err){
