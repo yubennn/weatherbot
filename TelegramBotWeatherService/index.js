@@ -34,7 +34,7 @@ function timeout(){
     // hkweather.updateRss('http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml', weatherRssHandler.checkRss);
     hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
     timeout();
-  },1000*3600);
+  },1000*5);
 }
 //get router
 app.post('/', function(req, res){
