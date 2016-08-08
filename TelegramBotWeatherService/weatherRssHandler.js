@@ -17,10 +17,9 @@ function checkRss(func, item){
         if(row.rss_datetime != item.date.toString()){
           console.log('func: ', func, 'title: ', item.title);
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
-          var data = {rss_datetime: row.rss_datetime};
+          var data = {rss_datetime: item.date};
           connection.query(updateSql, data, function(err){
             if(err){
-              console.log(123);
               throw err;
             }
           });
@@ -61,7 +60,6 @@ function genText(func, item){
 function sendUpdate(func, text){
   //查詢有訂閱的使用者
   connection.query(selectSubSql[func], null, function(error, rows){
-    console.log(rows);
     if(error){
       throw error;
     }
