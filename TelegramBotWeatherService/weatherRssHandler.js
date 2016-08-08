@@ -4,7 +4,7 @@ var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
 
 function checkRss(func, item){
-  console.log(fun,item.title);
+  console.log(func,item.title);
   var selectSql = 'select * from rss_log where ?';
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
