@@ -8,12 +8,12 @@ var privateKey = fs.readFileSync(__dirname+'/../PRIVATE.key');
 var certificate = fs.readFileSync(__dirname+'/../PUBLIC.pem');
 var credentials = {key: privateKey, cert: certificate};
 var app = express();
-var httpsServer = https.createServer(credentials, app).listen(process.env.PORT || 5000);
+var httpsServer = https.createServer(credentials, app);
 // server = https.createServer(credentials, app).listen(8443);
-// httpsServer.listen(process.env.PORT || 5000,function(){
-//   hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
-//   timeout();
-// });
+httpsServer.listen(process.env.PORT || 5000,function(){
+  hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
+  timeout();
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,13 +28,13 @@ handle["/tellmewarning"] = requestHandlers.tellmewarning;
 //hkweather rss
 var hkweather = require("./hkWeather");
 var weatherRssHandler = require("./weatherRssHandler");
-// function timeout(){
-//   setTimeout(function () {
-//     // hkweather.updateRss('http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml', weatherRssHandler.checkRss);
-//     hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
-//     timeout();
-//   },1000*30);
-// }
+function timeout(){
+  setTimeout(function () {
+    // hkweather.updateRss('http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml', weatherRssHandler.checkRss);
+    hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
+    timeout();
+  },1000*30);
+}
 //get router
 app.post('/', function(req, res){
   console.log(123);
