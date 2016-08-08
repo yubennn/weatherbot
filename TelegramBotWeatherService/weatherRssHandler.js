@@ -9,15 +9,16 @@ function checkRss(func, item){
   console.log(selectSql);
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
-  console.log(123123);
       //檢查是否有錯誤
       if(error){
           throw error;
       }
       if(rows.length > 0){
+      console.log(123123);
         var row = rows[0];
         //有更新
         if(row.rss_datetime != item.date.toString()){
+        console.log(123123);
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
           var data = {rss_datetime: row.rss_datetime};
           connection.query(updateSql, data, function(err){
@@ -38,6 +39,7 @@ function checkRss(func, item){
         sendUpdate(func, genText(func, item));
       }
     });
+    console.log(123123);
 }
 
 function sendRss(func, item, chatId){
