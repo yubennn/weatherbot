@@ -23,5 +23,9 @@
   "engines": {
     "node": "4.4.7"
   },
-  "description": ""
+  "description": "",
+  "scripts": {
+	  "start": "node server.js"
+	},
+	"main": "server.js"
 }

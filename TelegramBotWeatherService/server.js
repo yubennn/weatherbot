@@ -8,9 +8,9 @@ var privateKey = fs.readFileSync(__dirname+'/../PRIVATE.key');
 var certificate = fs.readFileSync(__dirname+'/../PUBLIC.pem');
 var credentials = {key: privateKey, cert: certificate};
 var app = express();
-var httpsServer = https.createServer(credentials, onRequest);
+var httpsServer = https.createServer(credentials, app);
 // server = https.createServer(credentials, app).listen(8443);
-var server =  httpsServer.listen(process.env.PORT || 8443, function(){
+var server =  httpsServer.listen(8443, function(){
   timeout();
 });
 app.use(bodyParser.json());
@@ -51,21 +51,3 @@ app.post('/', function(req, res){
     }
   }
 });
-function onRequest(req, rees){
-  'use strict';
-  //check method field exist
-  if(!req.body.message || !req.body.message.text){
-    res.send("There is not data coming!!");
-  }else{
-    var method = req.body.message.text;
-    if (typeof handle[method] === 'function') {
-      console.log("Method: " + method);
-      handle[method](res, req);
-    } else {
-      console.log("No request handler found for " + method);
-      res.writeHead(404, {"Content-Type": "text/html"});
-      res.write("404 Not found");
-      res.end();
-    }
-  }
-}
