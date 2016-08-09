@@ -34,7 +34,6 @@ function timeout(){
 }
 //get router
 app.post('/', function(req, res){
-  console.log(123);
   'use strict';
   //check method field exist
   if(!req.body.message || !req.body.message.text){
@@ -51,7 +50,4 @@ app.post('/', function(req, res){
       res.end();
     }
   }
-});
-app.get('/', function(req, res){
-  res.send('123123123');
 });
