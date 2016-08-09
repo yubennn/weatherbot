@@ -3,7 +3,6 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('cors');
 var fs = require('fs');
 var privateKey = fs.readFileSync(__dirname+'/../PRIVATE.key');
 var certificate = fs.readFileSync(__dirname+'/../PUBLIC.pem');
@@ -11,11 +10,10 @@ var credentials = {key: privateKey, cert: certificate};
 var app = express();
 var httpsServer = https.createServer(credentials, app);
 // server = https.createServer(credentials, app).listen(8443);
-httpsServer.listen(process.env.PORT || 8443,function(){
+var server =  httpsServer.listen(process.env.PORT || 8443, function(){
   timeout();
 });
 app.use(bodyParser.json());
-app.use(cors());
 //requesthandlers
 var requestHandlers = require("./requestHandlers");
 var handle = {}
