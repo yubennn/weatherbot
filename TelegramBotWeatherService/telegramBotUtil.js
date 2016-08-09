@@ -1,5 +1,13 @@
 var querystring = require('querystring');
-var http = require('http');
+var https = require('https');
+var rp = require('request-promise');
+var requestHandlers = require("./requestHandlers");
+var handle = {}
+handle["/start"] = requestHandlers.start;
+handle["/subscribewarning"] = requestHandlers.subscribewarning;
+handle["/unsubscribewarning"] = requestHandlers.unsubscribewarning;
+handle["/tellmecurrent"] = requestHandlers.tellmecurrent;
+handle["/tellmewarning"] = requestHandlers.tellmewarning;
 
 function sendMessage(chatId, text) {
   // Build the post string from an object
@@ -10,7 +18,7 @@ function sendMessage(chatId, text) {
   // An object of options to indicate where to post to
   var postOptions = {
       host: 'api.telegram.org',
-      path: 'bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/sendMessage',
+      path: '/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/sendMessage',
       method: 'POST',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -18,7 +26,7 @@ function sendMessage(chatId, text) {
       }
   };
   // Set up the request
-  var postReq = http.request(postOptions, function(res) {
+  var postReq = https.request(postOptions, function(res) {
       res.setEncoding('utf8');
       res.on('data', function (chunk) {
           console.log('Response: ' + chunk);
@@ -29,4 +37,58 @@ function sendMessage(chatId, text) {
   postReq.end();
 }
 
+function updateMessage(offset) {
+  var options = {
+      uri: 'https://api.telegram.org/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/getUpdates',
+      qs: {
+          offset: offset
+      },
+      headers: {
+          'User-Agent': 'Request-Promise'
+      },
+      json: true // Automatically parses the JSON string in the response
+  };
+
+  rp(options).then(function (chunk) {
+    var results = chunk.result;
+    results.forEach(function (result){
+      var method = result.message.text;
+      if(typeof handle[method] === 'function') {
+        console.log("Method: " + method);
+        handle[method](result);
+      }
+      offset = result.update_id;
+    });
+    return offset;
+  }).catch(function (err) {
+      console.log(err);
+  });
+  // var postOptions = {
+  //     host: 'api.telegram.org',
+  //     path: '/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/getUpdates?offset='+offset,
+  //     method: 'GET'
+  // };
+  // // Set up the request
+  // var postReq = https.request(postOptions, function(res) {
+  //     res.setEncoding('utf8');
+  //     res.on('data', function (chunk) {
+  //       var results = JSON.parse(chunk).result;
+  //       results.forEach(function (result){
+  //         var method = result.message.text;
+  //         if(typeof handle[method] === 'function') {
+  //           console.log("Method: " + method);
+  //           handle[method](result);
+  //         }
+  //         offset = result.update_id;
+  //       });
+  //       console.log(offset);
+  //       return offset;
+  //     });
+  // });
+  // // console.log(offset);
+  // postReq.end();
+}
+
+
 exports.sendMessage = sendMessage;
+exports.updateMessage = updateMessage;

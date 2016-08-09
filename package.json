@@ -1,31 +1,29 @@
 {
   "name": "yuben",
   "version": "1.0.0",
-  "main": ".mongorc.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.15.2",
     "co": "^4.6.0",
     "co-express": "^1.2.1",
     "co-request": "^1.0.0",
+    "cors": "^2.7.1",
     "express": "^4.14.0",
     "feedparser-promised": "^1.1.1",
+    "formidable": "^1.0.17",
     "hongkong-weather": "^1.0.0",
     "mysql": "^2.11.1",
-    "formidable": "^1.0.17",
-    "cors": "^2.7.1"
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "engines": {
     "node": "4.4.7"
   },
-  "description": "",
-  "scripts": {
-	  "start": "node server.js"
-	},
-	"main": "server.js"
+  "description": ""
 }
