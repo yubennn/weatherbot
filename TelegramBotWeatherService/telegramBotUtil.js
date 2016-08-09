@@ -37,56 +37,30 @@ function sendMessage(chatId, text) {
   postReq.end();
 }
 
-function updateMessage(offset) {
-  var options = {
-      uri: 'https://api.telegram.org/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/getUpdates',
-      qs: {
-          offset: offset
-      },
-      headers: {
-          'User-Agent': 'Request-Promise'
-      },
-      json: true // Automatically parses the JSON string in the response
+function updateMessage(offset, callback) {
+  var postOptions = {
+      host: 'api.telegram.org',
+      path: '/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/getUpdates?offset='+offset,
+      method: 'GET'
   };
-
-  rp(options).then(function (chunk) {
-    var results = chunk.result;
-    results.forEach(function (result){
-      var method = result.message.text;
-      if(typeof handle[method] === 'function') {
-        console.log("Method: " + method);
-        handle[method](result);
-      }
-      offset = result.update_id;
-    });
-    return offset;
-  }).catch(function (err) {
-      console.log(err);
+  // Set up the request
+  var postReq = https.request(postOptions, function(res) {
+      res.setEncoding('utf8');
+      res.on('data', function (chunk) {
+        var results = JSON.parse(chunk).result;
+        results.forEach(function (result){
+          var method = result.message.text;
+          if(typeof handle[method] === 'function') {
+            console.log("Method: " + method);
+            handle[method](result);
+          }
+          offset = result.update_id+1;
+        });
+        callback(offset);
+      });
   });
-  // var postOptions = {
-  //     host: 'api.telegram.org',
-  //     path: '/bot247328895:AAFvQ8H0mqHEtN_YI4qmg7qEHfx4drsDA7c/getUpdates?offset='+offset,
-  //     method: 'GET'
-  // };
-  // // Set up the request
-  // var postReq = https.request(postOptions, function(res) {
-  //     res.setEncoding('utf8');
-  //     res.on('data', function (chunk) {
-  //       var results = JSON.parse(chunk).result;
-  //       results.forEach(function (result){
-  //         var method = result.message.text;
-  //         if(typeof handle[method] === 'function') {
-  //           console.log("Method: " + method);
-  //           handle[method](result);
-  //         }
-  //         offset = result.update_id;
-  //       });
-  //       console.log(offset);
-  //       return offset;
-  //     });
-  // });
-  // // console.log(offset);
-  // postReq.end();
+  // console.log(offset);
+  postReq.end();
 }
 
 

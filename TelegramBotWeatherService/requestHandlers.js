@@ -24,7 +24,6 @@ function start(body) {
 
 function subscribewarning(body) {
   var chatId = body.message.chat.id;
-  console.log(chatId);
   //查詢該使用者是否已訂購過
   var selectSql = 'select 1 from member where ?';
   var data = {chat_id: chatId};
@@ -36,6 +35,7 @@ function subscribewarning(body) {
       if(rows.length > 0){
         //使用者存在則更新註記
         var updateSql = 'update member set subscribe = "Y" where ?';
+        var data = {chat_id: chatId};
         connection.query(updateSql, data, function (err) {
             if (err) {
               throw err;
@@ -57,6 +57,7 @@ function subscribewarning(body) {
         });
       }
   });
+  telegramBotUtil.sendMessage(chatId, 'subscribe success');
 }
 
 function unsubscribewarning(body) {
@@ -79,9 +80,11 @@ function unsubscribewarning(body) {
         });
       }
   });
+  telegramBotUtil.sendMessage(chatId, 'unsubscribe success');
 }
 
 function tellmecurrent(body) {
+  var chatId = body.message.chat.id;
   hkweather.updateRss('http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml', weatherRssHandler.sendRss, chatId);
 }
 

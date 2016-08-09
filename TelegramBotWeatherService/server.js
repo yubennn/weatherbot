@@ -12,9 +12,24 @@ var app = express();
 var httpsServer = https.createServer(credentials, app);
 // server = https.createServer(credentials, app).listen(8443);
 var server =  httpsServer.listen(8443, function(){
-  timeout(1);
+  updateRssBatch(0);
 });
+//監視天氣警報
+function updateRssBatch(res){
+  hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
+  getUpdateMessage(res);
+}
+//取得新訊息
+function getUpdateMessage(offset){
+  setTimeout(function () {
+    //get update message from telegram
+    telegramBotUtil.updateMessage(offset, updateRssBatch);
+  },1000*2);
+}
 app.use(bodyParser.json());
+
+
+//以下for setWebhook
 //requesthandlers
 var requestHandlers = require("./requestHandlers");
 var handle = {}
@@ -26,14 +41,6 @@ handle["/tellmewarning"] = requestHandlers.tellmewarning;
 //hkweather rss
 var hkweather = require("./hkWeather");
 var weatherRssHandler = require("./weatherRssHandler");
-function timeout(offset){
-  setTimeout(function () {
-    //get update message from telegram
-    var res = telegramBotUtil.updateMessage(offset);
-    hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
-    timeout(res+1);
-  },1000*2);
-}
 //get router for setWebhook
 app.post('/', function(req, res){
   'use strict';

@@ -4,7 +4,6 @@ var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
 
 function checkRss(func, item){
-  console.log(func,item.title);
   var selectSql = 'select * from rss_log where ?';
   var data = {rss_func: func};
   connection.query(selectSql, data, function(error, rows){
@@ -16,6 +15,7 @@ function checkRss(func, item){
         var row = rows[0];
         //有更新
         if(row.rss_datetime != item.date.toString()){
+          console.log(func,item.title);
           console.log(row.rss_datetime);
           console.log(item.date);
           var updateSql = 'update rss_log set ? where rss_func = \''+func+'\'';
@@ -47,14 +47,16 @@ function sendRss(func, item, chatId){
 
 function genText(func, item){
   var text = '';
+  var title = item.title;
+  var summary = item.summary;
   if(func == 'CurrentWeather_uc'){
-    text = item.title + '\n' +
-      item.summary;
-  }else if(func == 'WeatherWarningBulletin_uc'){
-    text = item.title + '\n' +
-      // item.summary.split("<br/>").join("\n");
-      item.summary;
+    summary = summary.substring(summary.indexOf('<br/><br/>')+10,summary.indexOf('<p></p>'))
   }
+  summary = summary.split("<br/>").join("\n")
+  summary = summary.split(" ").join("");
+  summary = summary.split("\t").join("");
+  summary = summary.split("\r\n").join("");
+  text = title + '\n' + summary;
   console.log(text);
   return text;
 }
