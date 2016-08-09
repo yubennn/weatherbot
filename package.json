@@ -1,7 +1,6 @@
 {
   "name": "yuben",
   "version": "1.0.0",
-  "description": "",
   "main": ".mongorc.js",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -12,15 +11,17 @@
     "feedparser-promised": "^1.1.1",
     "hongkong-weather": "^1.0.0",
     "mysql": "^2.11.1",
-    "formidable": "^1.0.17"
+    "formidable": "^1.0.17",
+    "cors": "^2.7.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"	,
+  "license": "ISC",
   "engines": {
     "node": "4.4.7"
-  }
+  },
+  "description": ""
 }
