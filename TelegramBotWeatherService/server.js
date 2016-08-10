@@ -17,6 +17,7 @@ var server =  httpsServer.listen(8443, function(){
 //監視天氣警報
 function updateRssBatch(res){
   hkweather.updateRss('http://rss.weather.gov.hk/rss/WeatherWarningBulletin_uc.xml', weatherRssHandler.checkRss);
+  hkweather.updateRss('http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml', weatherRssHandler.checkRss);
   getUpdateMessage(res);
 }
 //取得新訊息
@@ -36,6 +37,8 @@ var handle = {}
 handle["/start"] = requestHandlers.start;
 handle["/subscribewarning"] = requestHandlers.subscribewarning;
 handle["/unsubscribewarning"] = requestHandlers.unsubscribewarning;
+handle["/subscribecurrent"] = requestHandlers.subscribecurrent;
+handle["/unsubscribecurrent"] = requestHandlers.unsubscribecurrent;
 handle["/tellmecurrent"] = requestHandlers.tellmecurrent;
 handle["/tellmewarning"] = requestHandlers.tellmewarning;
 //hkweather rss

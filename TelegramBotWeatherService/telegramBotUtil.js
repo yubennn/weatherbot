@@ -6,6 +6,8 @@ var handle = {}
 handle["/start"] = requestHandlers.start;
 handle["/subscribewarning"] = requestHandlers.subscribewarning;
 handle["/unsubscribewarning"] = requestHandlers.unsubscribewarning;
+handle["/subscribecurrent"] = requestHandlers.subscribecurrent;
+handle["/unsubscribecurrent"] = requestHandlers.unsubscribecurrent;
 handle["/tellmecurrent"] = requestHandlers.tellmecurrent;
 handle["/tellmewarning"] = requestHandlers.tellmewarning;
 

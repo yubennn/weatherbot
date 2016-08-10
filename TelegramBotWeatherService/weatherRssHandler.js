@@ -1,8 +1,10 @@
 var connection = require("./dbConnection");
 var telegramBotUtil = require("./telegramBotUtil");
 var selectSubSql = {}
-selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
-selectSubSql["WeatherWarningBulletin"] = "select * from member where subscribe = 'Y'";
+selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'W'";
+selectSubSql["WeatherWarningBulletin"] = "select * from member where subscribe = 'W'";
+selectSubSql["CurrentWeather_uc"] = "select * from member where subscribe = 'C'";
+selectSubSql["CurrentWeather"] = "select * from member where subscribe = 'C'";
 
 function checkRss(func, item){
   var selectSql = 'select * from rss_log where ?';
