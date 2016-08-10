@@ -50,7 +50,6 @@ function updateMessage(offset, callback) {
       res.setEncoding('utf8');
       res.on('data', function (chunk) {
         var results = JSON.parse(chunk).result;
-        console.log(results);
         results.forEach(function (result){
           var method = result.message.text;
           if(typeof handle[method] === 'function') {
