@@ -2,6 +2,7 @@ var connection = require("./dbConnection");
 var telegramBotUtil = require("./telegramBotUtil");
 var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'Y'";
+selectSubSql["WeatherWarningBulletin"] = "select * from member where subscribe = 'Y'";
 
 function checkRss(func, item){
   var selectSql = 'select * from rss_log where ?';
@@ -52,13 +53,17 @@ function genText(func, item){
   if(func == 'CurrentWeather_uc'){
     summary = summary.substring(summary.indexOf('<br/><br/>')+10,summary.indexOf('<p></p>'))
   }
-  summary = summary.split("<br/>").join("\n")
-  summary = summary.split(" ").join("");
-  summary = summary.split("\t").join("");
-  summary = summary.split("\r\n").join("");
+  summary = removeHTML(summary);
   text = title + '\n' + summary;
   console.log(text);
   return text;
+}
+
+function removeHTML(strText) {
+  var reqBr = /<br\/>/g;
+  strText = strText.replace(reqBr,"\n");
+  var regEx = /<[^>]*>|\t|\r\n| /g;
+  return strText.replace(regEx, "");
 }
 
 function sendUpdate(func, text){

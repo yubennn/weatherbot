@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 
 //以下for setWebhook
-//requesthandlers
+//requesthandlerso
 var requestHandlers = require("./requestHandlers");
 var handle = {}
 handle["/start"] = requestHandlers.start;
