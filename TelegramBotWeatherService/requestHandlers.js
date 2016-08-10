@@ -116,7 +116,7 @@ function unsubscribecurrent(body) {
       }
       if(rows.length > 0){
         //使用者存在則更新註記
-        var updateSql = 'delete from member where ? and subscribe = "C';
+        var updateSql = 'delete from member where ? and subscribe = "C"';
         connection.query(updateSql, data, function (err) {
             if (err) {
               throw err;
