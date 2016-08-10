@@ -47,9 +47,10 @@ function subscribewarning(body) {
             }
         });
         telegramBotUtil.sendMessage(chatId, 'subscribe success');
+      }else{
+        telegramBotUtil.sendMessage(chatId, 'already subscribe');
       }
   });
-  telegramBotUtil.sendMessage(chatId, 'already subscribe');
 }
 
 function unsubscribewarning(body) {
@@ -71,9 +72,10 @@ function unsubscribewarning(body) {
             }
         });
         telegramBotUtil.sendMessage(chatId, 'unsubscribe success');
+      }else{
+        telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
       }
   });
-  telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
 }
 
 function subscribecurrent(body) {
@@ -99,9 +101,10 @@ function subscribecurrent(body) {
             }
         });
         telegramBotUtil.sendMessage(chatId, 'subscribe success');
+      }else{
+        telegramBotUtil.sendMessage(chatId, 'already subscribe');
       }
   });
-  telegramBotUtil.sendMessage(chatId, 'already subscribe');
 }
 
 function unsubscribecurrent(body) {
@@ -123,9 +126,10 @@ function unsubscribecurrent(body) {
             }
         });
         telegramBotUtil.sendMessage(chatId, 'unsubscribe success');
+      }else{
+        telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
       }
   });
-  telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
 }
 
 function tellmecurrent(body) {
