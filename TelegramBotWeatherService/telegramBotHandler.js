@@ -1,6 +1,5 @@
 var querystring = require('querystring');
 var https = require('https');
-var rp = require('request-promise');
 var requestHandlers = require("./requestHandlers");
 var handle = {}
 handle["/start"] = requestHandlers.start;
