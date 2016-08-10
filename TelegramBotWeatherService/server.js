@@ -4,7 +4,8 @@ var https = require('https');
 var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var telegramBotUtil = require("./telegramBotUtil");
+var telegramBotHandler = require("./telegramBotHandler");
+var hkweather = require("./weatherRssHandler");
 var privateKey = fs.readFileSync(__dirname+'/../PRIVATE.key');
 var certificate = fs.readFileSync(__dirname+'/../PUBLIC.pem');
 var credentials = {key: privateKey, cert: certificate};
@@ -24,7 +25,7 @@ function updateRssBatch(res){
 function getUpdateMessage(offset){
   setTimeout(function () {
     //get update message from telegram
-    telegramBotUtil.updateMessage(offset, updateRssBatch);
+    telegramBotHandler.updateMessage(offset, updateRssBatch);
   },1000*2);
 }
 app.use(bodyParser.json());
@@ -41,8 +42,6 @@ handle["/subscribecurrent"] = requestHandlers.subscribecurrent;
 handle["/unsubscribecurrent"] = requestHandlers.unsubscribecurrent;
 handle["/tellmecurrent"] = requestHandlers.tellmecurrent;
 handle["/tellmewarning"] = requestHandlers.tellmewarning;
-//hkweather rss
-var hkweather = require("./hkWeather");
 var weatherRssHandler = require("./weatherRssHandler");
 //get router for setWebhook
 app.post('/', function(req, res){

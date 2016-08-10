@@ -1,11 +1,22 @@
 var connection = require("./dbConnection");
-var telegramBotUtil = require("./telegramBotUtil");
+var telegramBotHandler = require("./telegramBotHandler");
+var feedparser = require('feedparser-promised');
 var selectSubSql = {}
 selectSubSql["WeatherWarningBulletin_uc"] = "select * from member where subscribe = 'W'";
 selectSubSql["WeatherWarningBulletin"] = "select * from member where subscribe = 'W'";
 selectSubSql["CurrentWeather_uc"] = "select * from member where subscribe = 'C'";
 selectSubSql["CurrentWeather"] = "select * from member where subscribe = 'C'";
 
+
+function updateRss(url, callback, chatId){
+  feedparser.parse(url).then(function (items) {
+    var func = url.substring(url.indexOf('rss/')+4,url.indexOf('.xml'));
+    var item = items[0];
+    callback(func, item, chatId);
+  }).catch(function (error) {
+    console.log('error: ', error);
+  });
+}
 function checkRss(func, item){
   var selectSql = 'select * from rss_log where ?';
   var data = {rss_func: func};
@@ -45,7 +56,7 @@ function checkRss(func, item){
 
 function sendRss(func, item, chatId){
   console.log('func: ', func, 'title: ', item.title);
-  telegramBotUtil.sendMessage(chatId,genText(func, item));
+  telegramBotHandler.sendMessage(chatId,genText(func, item));
 }
 
 function genText(func, item){
@@ -76,11 +87,12 @@ function sendUpdate(func, text){
     }
     if(rows.length > 0){
       rows.forEach(function (row){
-        telegramBotUtil.sendMessage(row.chat_id,text);
+        telegramBotHandler.sendMessage(row.chat_id,text);
       });
     }
   });
 }
 
+exports.updateRss = updateRss;
 exports.checkRss = checkRss;
 exports.sendRss = sendRss;

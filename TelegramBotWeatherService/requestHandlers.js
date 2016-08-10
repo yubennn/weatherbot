@@ -3,9 +3,9 @@ var fs = require("fs");
 var formidable = require("formidable");
 var connection = require("./dbConnection");
 var HongKongWeather = require('hongkong-weather');
-var hkweather = require("./hkWeather");
+var hkweather = require("./weatherRssHandler");
 var weatherRssHandler = require("./weatherRssHandler");
-var telegramBotUtil = require("./telegramBotUtil");
+var telegramBotHandler = require("./telegramBotHandler");
 
 function start(body) {
   console.log("Request handler 'start' was called.");
@@ -21,7 +21,7 @@ function start(body) {
               '/unsubscribecurrent - The bot will not send update to user from now on \n'+
               '/tellmecurrent - Provide the current weather report \n'+
               '/tellmewarning - Provide the weather warning \n';
-   telegramBotUtil.sendMessage(chatId, text);
+   telegramBotHandler.sendMessage(chatId, text);
 }
 
 function subscribewarning(body) {
@@ -46,9 +46,9 @@ function subscribewarning(body) {
               throw err;
             }
         });
-        telegramBotUtil.sendMessage(chatId, 'subscribe success');
+        telegramBotHandler.sendMessage(chatId, 'subscribe success');
       }else{
-        telegramBotUtil.sendMessage(chatId, 'already subscribe');
+        telegramBotHandler.sendMessage(chatId, 'already subscribe');
       }
   });
 }
@@ -71,9 +71,9 @@ function unsubscribewarning(body) {
               throw err;
             }
         });
-        telegramBotUtil.sendMessage(chatId, 'unsubscribe success');
+        telegramBotHandler.sendMessage(chatId, 'unsubscribe success');
       }else{
-        telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
+        telegramBotHandler.sendMessage(chatId, 'not subscribe yet');
       }
   });
 }
@@ -100,9 +100,9 @@ function subscribecurrent(body) {
               throw err;
             }
         });
-        telegramBotUtil.sendMessage(chatId, 'subscribe success');
+        telegramBotHandler.sendMessage(chatId, 'subscribe success');
       }else{
-        telegramBotUtil.sendMessage(chatId, 'already subscribe');
+        telegramBotHandler.sendMessage(chatId, 'already subscribe');
       }
   });
 }
@@ -125,9 +125,9 @@ function unsubscribecurrent(body) {
               throw err;
             }
         });
-        telegramBotUtil.sendMessage(chatId, 'unsubscribe success');
+        telegramBotHandler.sendMessage(chatId, 'unsubscribe success');
       }else{
-        telegramBotUtil.sendMessage(chatId, 'not subscribe yet');
+        telegramBotHandler.sendMessage(chatId, 'not subscribe yet');
       }
   });
 }
